@@ -15,6 +15,7 @@ const QuickAuthGateModal = ({ isOpen, onClose, onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState('');
+  const googleConfigured = Boolean(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 
   // Real Google OAuth — opens native Google account picker popup
   const triggerGoogleLogin = useGoogleLogin({
@@ -57,6 +58,7 @@ const QuickAuthGateModal = ({ isOpen, onClose, onSuccess }) => {
   });
 
   const handleGoogleClick = () => {
+    if (!googleConfigured) return;
     setError('');
     setGoogleLoading(true);
     triggerGoogleLogin();
@@ -139,7 +141,7 @@ const QuickAuthGateModal = ({ isOpen, onClose, onSuccess }) => {
               <motion.button
                 type="button"
                 onClick={handleGoogleClick}
-                disabled={googleLoading || loading}
+                disabled={!googleConfigured || googleLoading || loading}
                 whileHover={{ scale: googleLoading ? 1 : 1.01 }}
                 whileTap={{ scale: googleLoading ? 1 : 0.98 }}
                 className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/90 hover:bg-slate-50 dark:hover:bg-slate-700/80 hover:border-blue-400/60 text-slate-800 dark:text-white font-bold shadow-md hover:shadow-xl transition-all text-sm group disabled:opacity-60 disabled:cursor-not-allowed"

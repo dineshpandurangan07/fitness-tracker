@@ -12,6 +12,7 @@ const GoogleAuthModal = ({ isOpen, onClose, onSuccess }) => {
   const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const googleConfigured = Boolean(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 
   // Real Google OAuth — triggers the native Google account picker popup
   const triggerGoogleLogin = useGoogleLogin({
@@ -54,6 +55,7 @@ const GoogleAuthModal = ({ isOpen, onClose, onSuccess }) => {
   });
 
   const handleGoogleClick = () => {
+    if (!googleConfigured) return;
     setError('');
     setLoading(true);
     // The popup opens and loading will be cleared by onSuccess/onError
@@ -80,7 +82,7 @@ const GoogleAuthModal = ({ isOpen, onClose, onSuccess }) => {
         <motion.button
           type="button"
           onClick={handleGoogleClick}
-          disabled={loading}
+          disabled={!googleConfigured || loading}
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.98 }}
           className="w-full flex items-center justify-center gap-3 py-4 px-5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 hover:border-blue-400/60 text-slate-800 dark:text-white font-bold shadow-md hover:shadow-xl transition-all text-sm group disabled:opacity-60 disabled:cursor-not-allowed"
