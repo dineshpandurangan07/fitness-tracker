@@ -9,13 +9,16 @@ const connectDB = async () => {
     // Set connection timeout to 3 seconds so we can fall back quickly if local mongod is not active
     mongoose.set('strictQuery', false);
     
+    let primaryErr;
+
     try {
       const conn = await mongoose.connect(connUri, {
         serverSelectionTimeoutMS: 3000,
       });
       console.log(`MongoDB Connected successfully: ${conn.connection.host}`);
       return;
-    } catch (primaryErr) {
+    } catch (error) {
+      primaryErr = error;
       console.warn(`Standard MongoDB connection to ${connUri} failed: ${primaryErr.message}`);
       console.log('Attempting in-memory MongoDB fallback for instant local evaluation...');
     }
@@ -37,7 +40,7 @@ const connectDB = async () => {
     }
   } catch (error) {
     console.error(`MongoDB Connection Error: ${error.message}`);
-    process.exit(1);
+    throw error;
   }
 };
 
