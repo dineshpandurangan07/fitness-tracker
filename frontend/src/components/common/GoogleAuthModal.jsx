@@ -76,18 +76,6 @@ const GoogleAuthModal = ({ isOpen, onClose, onSuccess }) => {
           </p>
         </div>
 
-        {/* Error Alert */}
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-start gap-2.5 p-3.5 rounded-xl bg-red-500/10 border border-red-500/25 text-sm text-red-600 dark:text-red-400"
-          >
-            <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
-            <span>{error}</span>
-          </motion.div>
-        )}
-
         {/* Real Google Sign-In Button */}
         <motion.button
           type="button"
