@@ -64,7 +64,18 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 
 ### Deploying to Vercel
 
-Import the repository into Vercel with the repository root as the project root. The included `vercel.json` builds the Vite frontend and exposes the Express API through the same domain.
+Import the repository into Vercel with the repository root as the project root. In Vercel **Project Settings > General**, set **Root Directory** to `.` (the repository root), not `frontend`. If Vercel is currently set to `frontend`, the install command will incorrectly look for `frontend/backend/package.json`.
+
+Use these project settings:
+
+```
+Root Directory: .
+Build Command: npm run build
+Output Directory: frontend/dist
+Install Command: npm --prefix backend install && npm --prefix frontend install
+```
+
+The included `vercel.json` builds the Vite frontend and exposes the Express API through the same domain.
 
 Add these Vercel environment variables for Production, Preview, and Development as needed:
 
