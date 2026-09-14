@@ -16,6 +16,9 @@ const QuickAuthGateModal = ({ isOpen, onClose, onSuccess }) => {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState('');
   const googleConfigured = Boolean(import.meta.env.VITE_GOOGLE_CLIENT_ID);
+  const displayError = error.includes('Configure a valid MONGO_URI')
+    ? 'Fast login is temporarily unavailable. Please configure MongoDB in Vercel.'
+    : error;
 
   // Real Google OAuth — opens native Google account picker popup
   const triggerGoogleLogin = useGoogleLogin({
@@ -83,7 +86,9 @@ const QuickAuthGateModal = ({ isOpen, onClose, onSuccess }) => {
       if (onSuccess) onSuccess();
       if (onClose) onClose();
     } else {
-      setError(result.message || 'Login failed. Please try again.');
+      const message = result.message || 'Login failed. Please try again.';
+      setError(message);
+      addToast(message, 'error');
     }
   };
 
@@ -135,6 +140,17 @@ const QuickAuthGateModal = ({ isOpen, onClose, onSuccess }) => {
                 Sign in with your real Google account or enter your Mail ID for instant access.
               </p>
             </div>
+
+            {displayError && (
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-2.5 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-sm text-amber-600 dark:text-amber-400"
+              >
+                <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                <span>{displayError}</span>
+              </motion.div>
+            )}
 
             {/* PRIMARY: Real Continue with Google Button */}
             <div className="space-y-3">
