@@ -1,18 +1,18 @@
-# ??? FitPulse — Fitness & Workout Tracker
+# ??? FitPulse ï¿½ Fitness & Workout Tracker
 
 A full-stack, modern fitness tracking app built with **React + Vite** (frontend) and **Node.js + Express + MongoDB** (backend).
 
 ## ? Features
 
-- ?? **Real Google OAuth** — Sign in with your actual Google account
-- ? **Fast Mail Login** — Instant login with just your email
-- ?? **Dashboard** — Workout stats, progress charts, and calorie tracking
-- ?? **Workout Logging** — Log exercises, sets, reps, and duration
-- ?? **Weight Tracker** — Track body weight over time with charts
-- ?? **Goals** — Set and monitor fitness goals
-- ?? **Calorie Tracker** — Daily calorie intake management
-- ?? **History** — Full workout history and analytics
-- ?? **Dark Mode** — Full dark/light theme support
+- ?? **Real Google OAuth** ï¿½ Sign in with your actual Google account
+- ? **Fast Mail Login** ï¿½ Instant login with just your email
+- ?? **Dashboard** ï¿½ Workout stats, progress charts, and calorie tracking
+- ?? **Workout Logging** ï¿½ Log exercises, sets, reps, and duration
+- ?? **Weight Tracker** ï¿½ Track body weight over time with charts
+- ?? **Goals** ï¿½ Set and monitor fitness goals
+- ?? **Calorie Tracker** ï¿½ Daily calorie intake management
+- ?? **History** ï¿½ Full workout history and analytics
+- ?? **Dark Mode** ï¿½ Full dark/light theme support
 
 ## ??? Tech Stack
 
@@ -61,6 +61,22 @@ GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 VITE_API_URL=http://localhost:5000/api
 VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 ```
+
+### Deploying to Vercel
+
+Import the repository into Vercel with the repository root as the project root. The included `vercel.json` builds the Vite frontend and exposes the Express API through the same domain.
+
+Add these Vercel environment variables for Production, Preview, and Development as needed:
+
+```
+MONGO_URI=mongodb+srv://<user>:<password>@<cluster>/<database>
+JWT_SECRET=<long-random-secret>
+NODE_ENV=production
+GOOGLE_CLIENT_ID=<google-client-id>
+VITE_GOOGLE_CLIENT_ID=<google-client-id>
+```
+
+Do not set `VITE_API_URL` for Vercel. The frontend uses relative `/api` requests so the deployed website and API share one URL.
 
 ## ?? Screenshots
 

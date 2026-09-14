@@ -63,24 +63,26 @@ if (fs.existsSync(distPath)) {
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
-
-// Start server after connecting to database
-const startServer = async () => {
+const initializeApp = async () => {
   try {
     await connectDB();
     await seedExercises();
     await seedDemoUserData();
-
-    app.listen(PORT, () => {
-      console.log(`======================================================`);
-      console.log(`🚀 Unified App & API Server running on http://localhost:${PORT}`);
-      console.log(`======================================================`);
-    });
+    return app;
   } catch (error) {
     console.error('Failed to start server:', error.message);
-    process.exit(1);
+    throw error;
   }
 };
 
-startServer();
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  initializeApp().then(() => {
+    app.listen(PORT, () => {
+      console.log(`Unified App & API Server running on http://localhost:${PORT}`);
+    });
+  });
+}
+
+module.exports = { app, initializeApp };

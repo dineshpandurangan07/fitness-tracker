@@ -20,7 +20,11 @@ const connectDB = async () => {
       console.log('Attempting in-memory MongoDB fallback for instant local evaluation...');
     }
 
-    // In-memory fallback
+    if (process.env.NODE_ENV === 'production') {
+      throw primaryErr;
+    }
+
+    // In-memory fallback for local development only.
     try {
       const { MongoMemoryServer } = require('mongodb-memory-server');
       mongod = await MongoMemoryServer.create();
