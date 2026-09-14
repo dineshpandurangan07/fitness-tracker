@@ -15,6 +15,7 @@ const QuickAuthGateModal = ({ isOpen, onClose, onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState('');
+  const showError = error && !error.includes('Configure a valid MONGO_URI');
 
   // Real Google OAuth — opens native Google account picker popup
   const triggerGoogleLogin = useGoogleLogin({
@@ -135,7 +136,7 @@ const QuickAuthGateModal = ({ isOpen, onClose, onSuccess }) => {
             </div>
 
             {/* Error Alert */}
-            {error && (
+            {showError && (
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
